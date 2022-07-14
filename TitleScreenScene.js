@@ -17,24 +17,12 @@ class TitleScreen extends Phaser.Scene {
         this.titleText=this.add.bitmapText(0,50,"pixelFont","BREAKOUT",120);
         centerTextScreen(this.titleText);
 
-        this.startText=this.add.bitmapText(0,250,"pixelFont","START",90)
-        centerTextScreen(this.startText);
 
-        this.startRect=getTextRectangle(this.startText,this,5);
-        this.startRect.on("pointerdown",()=>{
-           // this.scene.start("game")
-        })
-        
-        this.startText.depth=30;
+        this.addButtons(250,"start","START","game");
+        this.addButtons(375,"settings","SETTINGS","settings");
+        this.addButtons(500,"credits","CREDITS","credits");
 
-        this.settingsText=this.add.bitmapText(0,375,"pixelFont","SETTINGS",90)
-        centerTextScreen(this.settingsText);
 
-        this.settingsRect=getTextRectangle(this.settingsText,this,5);
-        this.settingsText.depth=30;
-        this.settingsRect.on("pointerdown",()=>{
-            this.scene.start("settings")
-        })
         
         this.broscreen=this.add.bitmapText(10,config.height-30,"pixelFont","DEVELOPED BY 2 FUCKHEADS",30);
         
@@ -45,10 +33,13 @@ class TitleScreen extends Phaser.Scene {
             scene.titleText.setTint(tint);
             scene.settingsText.setTint(tint);
             scene.broscreen.setTint(tint);
+            scene.creditsText.setTint(tint);
             if(scene.startRect.fillAlpha==1)
                 scene.startRect.setStrokeStyle(5, tint, 1);
             if(scene.settingsRect.fillAlpha==1)
                 scene.settingsRect.setStrokeStyle(5, tint, 1);
+            if(scene.creditsRect.fillAlpha==1)
+                scene.creditsRect.setStrokeStyle(5, tint, 1);
         }))    
         
         
@@ -59,6 +50,17 @@ class TitleScreen extends Phaser.Scene {
         
         //this.b.tilePositionX+=.5;
     }
-  
+    addButtons(y,baseName,text,destination){
+        const tb=this.add.bitmapText(0,y,"pixelFont",text,90)
+        this[baseName+"Text"]=tb;
+        centerTextScreen(tb);
+        
+        const rect=getTextRectangle(tb,this,5);
+        this[baseName+"Rect"]=rect;
+        rect.on("pointerdown",()=>{
+            this.scene.start(destination);
+        });
+        tb.depth=30;
+    }
  
 }

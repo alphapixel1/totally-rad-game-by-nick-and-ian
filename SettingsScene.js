@@ -2,9 +2,9 @@ class SettingsScene extends Phaser.Scene {
     constructor(){
         super("settings");
     }
-    /*preload(){
-        
-    }*/
+    preload(){
+        this.load.image("teacher","assets/balls/t.png");
+    }
     create(){
         
         CurrentBackground.addBackground(this);
@@ -34,7 +34,7 @@ class SettingsScene extends Phaser.Scene {
 
         
 
-        const scene=this;
+        var scene=this;
         TweenText(this,(tint=>{
             scene.titleText.setTint(tint);
             scene.backgroundText.setTint(tint);
@@ -62,6 +62,7 @@ class SettingsScene extends Phaser.Scene {
             const b=Balls[i];
 
             const ballBorder=this.add.circle(ballXPos[i],445,26,0x000000);
+
             const currentBallData={
                 ballBorder:ballBorder,
                 color:b
@@ -87,8 +88,12 @@ class SettingsScene extends Phaser.Scene {
             this.add.circle(ballXPos[i],445,24,b);//main color ball
             
             this.CirclePreviews.push(currentBallData);
+            if(b==CurrentBall)
+                this.selectedBall=currentBallData;
         }
-        this.selectedBall=this.CirclePreviews.find(z=>z.color==CurrentBall);
+        //this.selectedBall=this.CirclePreviews.find(z=>z.color==CurrentBall);
+        this.add.sprite(226,445,"teacher")
+
     }
     addBackgrounds(){
         this.backgroundText=this.add.bitmapText(0,160,"pixelFont","BACKGROUND",50);

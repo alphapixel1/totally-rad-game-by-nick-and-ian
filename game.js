@@ -89,8 +89,6 @@ function getTextRectangle(text,scene,padding){
     let w=global.width + (padding*2);
     let h=global.height + (padding*2);
     let rect=scene.add.rectangle((text.x+(global.width/2))-(padding), (text.y+(global.height/2))-(padding*2), w, h, 0x00000);
-   //let rect=scene.add.rectangle(text.x-padding, text.y-padding, w, h, 0x00000);
-   // rect.setOrigin(0,0);
     rect.fillAlpha=0;
     rect.setInteractive()
     rect.on("pointerover", () => {
@@ -122,11 +120,6 @@ function playMusic(scene){
         return;
     if(currentMusicPlaying.name!=CurrentMusic.name && currentMusicPlaying.music!=null){
         currentMusicPlaying.music.stop();
-     /*   currentMusicPlaying.name=CurrentMusic.name;
-        currentMusicPlaying.music=scene.sound.add(CurrentMusic.name)
-        currentMusicPlaying.music.play(); 
-        currentMusicPlaying.music.setLoop(true);*/
-        //playCurrent();
     }else if(CurrentMusic.file==""){
         currentMusicPlaying.name=CurrentMusic.name;
         return;   
@@ -139,18 +132,4 @@ function playMusic(scene){
         currentMusicPlaying.music.setLoop(true);
     }
     console.log(scene.sound)
-}
-function playCurrent(scene){
-    currentMusicPlaying.name=CurrentMusic.name;
-    /*if(CurrentMusic.file==""){
-        currentMusicPlaying.music=null;
-    }else{*/
-    try{
-        //currentMusicPlaying.name=CurrentMusic.name;
-        currentMusicPlaying.music=scene.sound.add(CurrentMusic.name)
-        currentMusicPlaying.music.play(); 
-        currentMusicPlaying.music.setLoop(true);
-    }catch (e){
-        console.log(e);
-    }
 }
