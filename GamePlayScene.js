@@ -1,6 +1,6 @@
-class LoadingScene extends Phaser.Scene {
+class GamePlayScene extends Phaser.Scene {
     constructor(){
-        super("bootGame");
+        super("game");
     }
     preload(){
         this.load.bitmapFont("pixelFont","assets/font/font.png","assets/font/font.xml");
