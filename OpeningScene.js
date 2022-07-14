@@ -3,7 +3,7 @@ class LoadingScene extends Phaser.Scene {
         super("bootGame");
     }
     preload(){
-        this.load.bitmapFont("pixelFont","assets/font/font.png","assets/font/font.xml");
+        loadAssets(this);
     }
     create(){
         this.loadingCount=0;

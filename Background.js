@@ -2,6 +2,7 @@ var parallaxInt;
 class Background{
     constructor(name,preview,folderName,images,speeds){
         this.preview=preview;
+        this.loaded=false;
         this.name=name;
         this.folderName=folderName;
         this.tiles=[];
@@ -11,7 +12,9 @@ class Background{
             throw `Background Error:${name} images length (${images.length}) does not equal speeds length (${speeds.length})`;
     }
     load(scene){
-        
+        if(this.loaded)
+            return; 
+        this.loaded=true;
         for(var i=0;i<this.images.length;i++){
             scene.load.image(this.name+"_background_"+i,`/assets/background/${this.folderName}/${this.images[i]}`);
         }        

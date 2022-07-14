@@ -12,7 +12,7 @@ const config={
         }
     }
 };
-var Backgrounds=[
+const Backgrounds=[
     //constructor(name,icon,images,speeds){
     new Background("Forest","preview.png","Forest",
         ["F1.png","F2.png","F3.png","F4.png","F5.png","F6.png","F7.png","F8.png","F9.png"],
@@ -22,8 +22,8 @@ var Backgrounds=[
         [[.2,0],[0.4,0],[0.5,0],[0.6,0]]),
     new Background("Black","preview.png","Black",["Black.png"],[[0,0]])
 ];
-var CurrentBackground=Backgrounds[1];
-var Balls=[
+var CurrentBackground=Backgrounds[0];
+const Balls=[
     0xffffff,//white
     0x0000ff,//blue
     0xff0000,//red
@@ -33,15 +33,30 @@ var Balls=[
     0xFFC0CB,//pink
     0x964B00,//brown
 ];
+var CurrentBall=Balls[0];
 
+const Music=[
+    {
+        name:"FOREST",
+        file:"assets/audio/music/forest.mp3"//https://youtu.be/8f7d_BSDoKA definetly stolen
+    },
+    {
+        name:"INDUSTRIAL",
+        file:"assets/audio/music/industrial.mp3"
+    },
+    {
+        name:"NONE",
+        file:""
+    },
+];
+var CurrentMusic=Music[2];
 
+var assetsLoaded=false;
 if(skipLoad)
     config.scene.shift()
-/*const gameSettings={
-    playerSpeed:200,
-};*/
+var game;
 window.onload=function(){
-    var game=new Phaser.Game(config);
+    game=new Phaser.Game(config);
 }
 
 /**
@@ -80,15 +95,62 @@ function getTextRectangle(text,scene,padding){
     rect.setInteractive()
     rect.on("pointerover", () => {
         rect.fillAlpha=1;
-        
-        //rect.setStrokeStyle(4, 0xefc53f);
     });
     rect.on("pointerout", () => {
         rect.fillAlpha=0;
         rect.setStrokeStyle(2, 0, 0);
-        
-        //rect.setStrokeStyle(4, 0xefc53f);
     });
     
     return rect;
+}
+function loadAssets(scene){
+    if(assetsLoaded)
+        return;
+    assetsLoaded=true;
+    scene.load.bitmapFont("pixelFont","assets/font/font.png","assets/font/font.xml");  
+    scene.load.image("Back Button","assets/back_button.png")
+    Backgrounds.forEach(z=>z.load(scene));
+    Music.forEach(z=>{scene.load.audio(z.name,z.file)})
+}
+var currentMusicPlaying={
+    name:"",
+    music:null,
+}
+function playMusic(scene){
+    console.log(currentMusicPlaying,CurrentMusic)
+    if(currentMusicPlaying.name==CurrentMusic.name)
+        return;
+    if(currentMusicPlaying.name!=CurrentMusic.name && currentMusicPlaying.music!=null){
+        currentMusicPlaying.music.stop();
+     /*   currentMusicPlaying.name=CurrentMusic.name;
+        currentMusicPlaying.music=scene.sound.add(CurrentMusic.name)
+        currentMusicPlaying.music.play(); 
+        currentMusicPlaying.music.setLoop(true);*/
+        //playCurrent();
+    }else if(CurrentMusic.file==""){
+        currentMusicPlaying.name=CurrentMusic.name;
+        return;   
+    }
+    
+    currentMusicPlaying.name=CurrentMusic.name;
+    if(true||scene.sound.sounds.find(z=>z.key==CurrentMusic.name)!=null){
+        currentMusicPlaying.music=scene.sound.add(CurrentMusic.name)
+        currentMusicPlaying.music.play(); 
+        currentMusicPlaying.music.setLoop(true);
+    }
+    console.log(scene.sound)
+}
+function playCurrent(scene){
+    currentMusicPlaying.name=CurrentMusic.name;
+    /*if(CurrentMusic.file==""){
+        currentMusicPlaying.music=null;
+    }else{*/
+    try{
+        //currentMusicPlaying.name=CurrentMusic.name;
+        currentMusicPlaying.music=scene.sound.add(CurrentMusic.name)
+        currentMusicPlaying.music.play(); 
+        currentMusicPlaying.music.setLoop(true);
+    }catch (e){
+        console.log(e);
+    }
 }

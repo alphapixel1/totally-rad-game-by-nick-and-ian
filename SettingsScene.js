@@ -2,10 +2,11 @@ class SettingsScene extends Phaser.Scene {
     constructor(){
         super("settings");
     }
-    preload(){
+    /*preload(){
         
-    }
+    }*/
     create(){
+        
         CurrentBackground.addBackground(this);
         this.titleText=this.add.bitmapText(0,50,"pixelFont","SETTINGS",120);
         centerTextScreen(this.titleText);
@@ -13,6 +14,83 @@ class SettingsScene extends Phaser.Scene {
         this.mainRect=this.add.rectangle(config.width/2,450,600,600,0x00000)
         this.mainRect.setStrokeStyle(5,0xFFFFFF,1)
        
+       
+
+       
+        
+        
+        this.addBackgrounds();
+        //balls
+        this.addBalls();
+        //music
+        this.addMusic();
+
+      
+        this.backButton=this.add.sprite(75,100,"Back Button");
+        this.backButton.setInteractive();
+        this.backButton.on("pointerdown",()=>{
+            this.scene.start("titleScreen")
+        });
+
+        
+
+        const scene=this;
+        TweenText(this,(tint=>{
+            scene.titleText.setTint(tint);
+            scene.backgroundText.setTint(tint);
+            scene.ballText.setTint(tint);
+            scene.backButton.setTint(tint);
+            this.MusicText.setTint(tint);
+            scene.mainRect.setStrokeStyle(5, tint, 1);
+            scene.selectedBackground.border.fillColor=tint;
+            scene.selectedMusicBorder.setStrokeStyle(5,tint,1);
+            
+            scene.selectedBall.ballBorder.fillColor=tint;
+        }));
+
+       
+    }
+    update(){
+      CurrentBackground.parallax();
+    }
+    addBalls(){
+        this.ballText=this.add.bitmapText(0,380,"pixelFont","BALL",50);
+        centerTextScreen(this.ballText);
+        var ballXPos=[226,294,362,430,498,566,634,702];
+        this.CirclePreviews=[];
+        for(var i in Balls){
+            const b=Balls[i];
+
+            const ballBorder=this.add.circle(ballXPos[i],445,26,0x000000);
+            const currentBallData={
+                ballBorder:ballBorder,
+                color:b
+            };
+            ballBorder.setInteractive();
+            ballBorder.on("pointerover", () => {
+                if(CurrentBall!=b){
+                    ballBorder.fillColor=0xffffff;
+                }
+            });
+            ballBorder.on("pointerout", () => {
+                if(CurrentBall!=b){
+                    ballBorder.fillColor=0x000000;
+                }
+            });
+            ballBorder.on("pointerdown",()=>{
+                const prevSelected=this.selectedBall;
+                this.selectedBall=currentBallData;
+                CurrentBall=b;
+                prevSelected.ballBorder.fillColor=0x000000;
+            });
+            
+            this.add.circle(ballXPos[i],445,24,b);//main color ball
+            
+            this.CirclePreviews.push(currentBallData);
+        }
+        this.selectedBall=this.CirclePreviews.find(z=>z.color==CurrentBall);
+    }
+    addBackgrounds(){
         this.backgroundText=this.add.bitmapText(0,160,"pixelFont","BACKGROUND",50);
         centerTextScreen(this.backgroundText);
 
@@ -56,36 +134,42 @@ class SettingsScene extends Phaser.Scene {
             
             console.log(r.displayWidth);
         }
+        this.selectedBackground=this.backgroundPreview.find(z=>z.background==CurrentBackground);
+    }
+    addMusic(){
+        this.MusicText=this.add.bitmapText(0,485,"pixelFont","MUSIC",50);
+        centerTextScreen(this.MusicText);
 
-        this.ballText=this.add.bitmapText(0,380,"pixelFont","BALL",50);
-        centerTextScreen(this.ballText);
-        
-
-        //balls
-        var ballXPos=[202,270,338,406,474,542,610,678];
-        this.CirclePreviewes=[];
-        for(var i in Balls){
-            const b=Balls[i];
-            alert("where cirlce")
-            const bC=this.add.circle(ballXPos[i], 420,348, b[i]);
-            console.log(bC);
+        for(var i in Music){
+            const song=Music[i];
+            const text=this.add.bitmapText(0,545+(i*70),"pixelFont",song.name,40);
+            centerTextScreen(text);
+            const border=getTextRectangle(text,this,7);
+            border.x+=5;
+            border.y+=7;
+            border.setInteractive();
+            border.on("pointerover", () => {
+                if(CurrentMusic!=song){
+                    border.setStrokeStyle(5,0xFFFFFF,1)
+                    //border.fillColor=0xff0000;
+                }
+            });
+            border.on("pointerout", () => {
+                if(CurrentMusic!=song){
+                    //border.fillColor=0xffffff;
+                    border.setStrokeStyle(5,0x000000,1)
+                }
+            });
+            border.on("pointerdown",()=>{
+                CurrentMusic=song;
+                const old=this.selectedMusicBorder;
+                this.selectedMusicBorder=border;
+                old.setStrokeStyle(5,0x000000,1)
+                playMusic(this);
+            })
+            text.depth=30;
+            if(CurrentMusic==song)
+                this.selectedMusicBorder=border;
         }
-
-        const scene=this;
-        TweenText(this,(tint=>{
-            scene.titleText.setTint(tint);
-            scene.backgroundText.setTint(tint);
-            scene.ballText.setTint(tint);
-            scene.mainRect.setStrokeStyle(5, tint, 1);
-            scene.backgroundPreview.find(z=>z.background==CurrentBackground).border.fillColor=tint;
-        }));
-
-       
-    }
-    update(){
-      CurrentBackground.parallax();
-    }
-    centerTextToSprite(text){
-
     }
 }

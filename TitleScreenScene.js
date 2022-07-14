@@ -4,20 +4,15 @@ class TitleScreen extends Phaser.Scene {
     }
     preload(){
         if(skipLoad){
-            this.load.bitmapFont("pixelFont","assets/font/font.png","assets/font/font.xml");
-            Backgrounds.forEach(z=>z.load(this));
+            loadAssets(this);
         }
-        this.load.bitmapFont("pixelFont","assets/font/font.png","assets/font/font.xml");
-        this.currentTint=0;
-        this.tintIncreasing=true;
-        CurrentBackground.load(this);
         console.log("preload complete")
         
         
         //this.load.image("background","/assets/background/Forest/F6.png");
     }
     create(){
-        
+        playMusic(this);
         CurrentBackground.addBackground(this);
         this.titleText=this.add.bitmapText(0,50,"pixelFont","BREAKOUT",120);
         centerTextScreen(this.titleText);
@@ -64,22 +59,6 @@ class TitleScreen extends Phaser.Scene {
         
         //this.b.tilePositionX+=.5;
     }
-    transitionTitleTextColor(){
-        if(this.tintIncreasing){
-            if(this.currentTint>=255){
-                this.tintIncreasing=false
-            }else{
-                this.currentTint+=5;
-            }
-        }else{
-            if(this.currentTint==0)
-                this.tintIncreasing=true;
-                else
-                this.currentTint--;
-        }
-        let s=this.currentTint.toString(16)
-        console.log("ff00"+s)
-        this.titleText.setTint("0xffff"+s);
-    }
+  
  
 }
