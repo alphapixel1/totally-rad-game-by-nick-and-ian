@@ -59,40 +59,41 @@ class SettingsScene extends Phaser.Scene {
         var ballXPos=[226,294,362,430,498,566,634,702];
         this.CirclePreviews=[];
         for(var i in Balls){
-            const b=Balls[i];
-
+            const ballName=Balls[i];
+            
             const ballBorder=this.add.circle(ballXPos[i],445,26,0x000000);
-
+            
             const currentBallData={
                 ballBorder:ballBorder,
-                color:b
+                name:ballName
             };
             ballBorder.setInteractive();
             ballBorder.on("pointerover", () => {
-                if(CurrentBall!=b){
+                if(CurrentBall!=ballName){
                     ballBorder.fillColor=0xffffff;
                 }
             });
             ballBorder.on("pointerout", () => {
-                if(CurrentBall!=b){
+                if(CurrentBall!=ballName){
                     ballBorder.fillColor=0x000000;
                 }
             });
             ballBorder.on("pointerdown",()=>{
                 const prevSelected=this.selectedBall;
                 this.selectedBall=currentBallData;
-                CurrentBall=b;
+                CurrentBall=ballName;
                 prevSelected.ballBorder.fillColor=0x000000;
             });
             
-            this.add.circle(ballXPos[i],445,24,b);//main color ball
-            
+            //this.add.circle(ballXPos[i],445,24,ballName);//main color ball
+            this.add.sprite(ballXPos[i],445,ballName);
+
             this.CirclePreviews.push(currentBallData);
-            if(b==CurrentBall)
+            if(ballName==CurrentBall)
                 this.selectedBall=currentBallData;
         }
         //this.selectedBall=this.CirclePreviews.find(z=>z.color==CurrentBall);
-        this.add.sprite(226,445,"teacher")
+     
 
     }
     addBackgrounds(){

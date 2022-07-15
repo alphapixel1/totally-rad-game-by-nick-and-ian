@@ -13,33 +13,34 @@ const config={
     }
 };
 const Backgrounds=[
-    //constructor(name,icon,images,speeds){
-    new Background("Forest","preview.png","Forest",
-        ["F1.png","F2.png","F3.png","F4.png","F5.png","F6.png","F7.png","F8.png","F9.png"],
+   /* new Background("Cyberpunk","preview","Nightlife",
+        ["far-buildings","back-buildings","foreground"],
+        [[.2,0],[0.4,0],[0.5,0]]),*/
+    new Background("Forest","preview","Forest",
+        ["F1","F2","F3","F4","F5","F6","F7","F8","F9"],
         [[.2,0],[.4,0],[.6,0],[.8,0],[1,0],[1.2,0],[1.4,0],[1.6,0],[1.8,0]]),
-    new Background("Industry","preview.png","Industry",
-        ["I1.png","I2.png","I3.png","I4.png"],
+    new Background("Industry","preview","Industry",
+        ["I1","I2","I3","I4"],
         [[.2,0],[0.4,0],[0.5,0],[0.6,0]]),
-    new Background("Black","preview.png","Black",["Black.png"],[[0,0]])
+    new Background("Black","preview","Black",["Black"],[[0,0]])
 ];
-var CurrentBackground=Backgrounds[0];
+
 const Balls=[
-    0xffffff,//white
-    0x0000ff,//blue
-    0xff0000,//red
-    0x00ff00,//green
-    0xffff00,//yellow
-    0x5D3FD3,//purple
-    0xFFC0CB,//pink
-    0x964B00,//brown
+    "duke",
+    "teacher",
+    "ian",
+    "nick",
 ];
-var CurrentBall=Balls[0];
 
 const Music=[
     {
         name:"FOREST",
         file:"assets/audio/music/forest.mp3"//https://youtu.be/8f7d_BSDoKA definetly stolen
     },
+    /*{
+        name:"Night Life",
+        file:"assets/audio/music/nightlife.mp3"
+    },*/
     {
         name:"INDUSTRIAL",
         file:"assets/audio/music/industrial.mp3"
@@ -49,7 +50,9 @@ const Music=[
         file:""
     },
 ];
-var CurrentMusic=Music[2];
+var CurrentBackground=Backgrounds[1];
+var CurrentBall=Balls[0];
+var CurrentMusic=Music[1];
 
 var assetsLoaded=false;
 if(skipLoad)
@@ -108,6 +111,9 @@ function loadAssets(scene){
     scene.load.bitmapFont("pixelFont","assets/font/font.png","assets/font/font.xml");  
     scene.load.image("Back Button","assets/back_button.png")
     Backgrounds.forEach(z=>z.load(scene));
+    Balls.forEach(name => {
+        scene.load.image(name,"assets/balls/"+name+".png");
+    });
     Music.forEach(z=>{scene.load.audio(z.name,z.file)})
 }
 var currentMusicPlaying={

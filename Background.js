@@ -16,14 +16,11 @@ class Background{
             return; 
         this.loaded=true;
         for(var i=0;i<this.images.length;i++){
-            scene.load.image(this.name+"_background_"+i,`/assets/background/${this.folderName}/${this.images[i]}`);
+            scene.load.image(this.name+"_background_"+i,`/assets/background/${this.folderName}/${this.images[i]}.png`);
         }        
-        scene.load.image(this.name+"_background_preview",`/assets/background/${this.folderName}/${this.preview}`);
-        console.log(`/assets/background/${this.folderName}/${this.preview}`)
+        scene.load.image(this.name+"_background_preview",`/assets/background/${this.folderName}/${this.preview}.png`);
     }
     addBackground(scene){
-      /*  if(this.tiles.length>0)
-            throw "Background.js: Tiles have already been loadeded what do maybe tile.destroy"*/
         this.tiles=[];
         for(var i=0;i<this.images.length;i++){
             this.tiles.push(scene.add.tileSprite(config.width/2,config.height/2,config.width,config.height,this.name+"_background_"+i));
