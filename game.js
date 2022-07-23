@@ -3,7 +3,7 @@ const config={
     width:928,
     height:793,
     backgroundColor:0x000000,
-    scene:[LoadingScene,TitleScreen,GamePlayScene,SettingsScene],
+    scene:[LoadingScene,TitleScreen,GamePlayScene,SettingsScene,CreditsScene],
     pixelArt:true,
     physics:{
         default:"arcade",
@@ -12,6 +12,30 @@ const config={
         }
     }
 };
+const credits=[
+    {
+        asset:"Font",
+        name:"Luis Zuno",
+        link:"https://www.youtube.com/c/LuisZuno"
+    },
+    {
+        asset:"Forest Background",
+        name:"edermunizz",
+        link:"https://edermunizz.itch.io/free-pixel-art-forest"
+    },
+    {
+        asset:"Industry Background & Audio",
+        name:"ansimuz",
+        link:"https://ansimuz.itch.io/industrial-parallax-background"
+    },
+    {
+        asset:"Forest Audio",
+        name:"Basar Under",
+        link:"https://www.youtube.com/watch?v=8f7d_BSDoKA"
+    }
+]
+
+
 const Backgrounds=[
    /* new Background("Cyberpunk","preview","Nightlife",
         ["far-buildings","back-buildings","foreground"],
@@ -38,7 +62,7 @@ const Music=[
         file:"assets/audio/music/forest.mp3"//https://youtu.be/8f7d_BSDoKA definetly stolen
     },
     /*{
-        name:"Night Life",
+        name:"NIGHTLIFE",
         file:"assets/audio/music/nightlife.mp3"
     },*/
     {
@@ -138,4 +162,22 @@ function playMusic(scene){
         currentMusicPlaying.music.setLoop(true);
     }
     console.log(scene.sound)
+}
+function addBackToTitleButton(scene){
+    var t=scene.add.bitmapText(50,77,"pixelFont","BACK",50);
+    r=getTextRectangle(t,scene,7);
+    r.x+=5;
+    r.y+=5;
+    t.depth=30;
+    r.on("pointerdown",()=>{
+        scene.scene.start("titleScreen")
+     });
+     return {
+        text:t,
+        rect:r
+     }
+}
+function tintBackToTitleButton(button,tint){
+    button.text.setTint(tint);
+    button.rect.setStrokeStyle(5,tint,1);
 }

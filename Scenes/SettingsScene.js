@@ -12,11 +12,7 @@ class SettingsScene extends Phaser.Scene {
         centerTextScreen(this.titleText);
        
         this.mainRect=this.add.rectangle(config.width/2,450,600,600,0x00000)
-        this.mainRect.setStrokeStyle(5,0xFFFFFF,1)
-       
-       
-
-       
+        this.mainRect.setStrokeStyle(5,0xFFFFFF,1) 
         
         
         this.addBackgrounds();
@@ -25,21 +21,15 @@ class SettingsScene extends Phaser.Scene {
         //music
         this.addMusic();
 
-      
-        this.backButton=this.add.sprite(75,100,"Back Button");
-        this.backButton.setInteractive();
-        this.backButton.on("pointerdown",()=>{
-            this.scene.start("titleScreen")
-        });
-
-        
+        this.backButton=addBackToTitleButton(this);        
 
         var scene=this;
         TweenText(this,(tint=>{
             scene.titleText.setTint(tint);
             scene.backgroundText.setTint(tint);
             scene.ballText.setTint(tint);
-            scene.backButton.setTint(tint);
+          //  scene.backButton.setTint(tint);
+            tintBackToTitleButton(scene.backButton,tint);
             this.MusicText.setTint(tint);
             scene.mainRect.setStrokeStyle(5, tint, 1);
             scene.selectedBackground.border.fillColor=tint;
