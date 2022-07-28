@@ -54,6 +54,7 @@ const Balls=[
     "teacher",
     "ian",
     "nick",
+    "doom"
 ];
 
 const Music=[
