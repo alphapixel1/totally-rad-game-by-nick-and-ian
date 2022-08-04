@@ -3,7 +3,7 @@ class SettingsScene extends Phaser.Scene {
         super("settings");
     }
     preload(){
-        this.load.image("teacher","assets/balls/t.png");
+       // this.load.image("teacher","assets/balls/t.png");
     }
     create(){
         
@@ -28,7 +28,7 @@ class SettingsScene extends Phaser.Scene {
             scene.titleText.setTint(tint);
             scene.backgroundText.setTint(tint);
             scene.ballText.setTint(tint);
-          //  scene.backButton.setTint(tint);
+         
             tintBackToTitleButton(scene.backButton,tint);
             this.MusicText.setTint(tint);
             scene.mainRect.setStrokeStyle(5, tint, 1);
