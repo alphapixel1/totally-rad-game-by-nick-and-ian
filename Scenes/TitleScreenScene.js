@@ -24,7 +24,7 @@ class TitleScreen extends Phaser.Scene {
 
 
         
-        this.broscreen=this.add.bitmapText(10,config.height-30,"pixelFont","DEVELOPED BY 2 FUCKHEADS",30);
+        this.broscreen=this.add.bitmapText(10,config.height-30,"pixelFont","DEVELOPED BY 2 F**KHEADS",30);
         
         const scene=this;
         TweenText(this,(tint=>{
