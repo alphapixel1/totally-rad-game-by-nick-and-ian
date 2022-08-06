@@ -36,13 +36,13 @@ class GamePlayScene extends Phaser.Scene {
         this.paddle.setInteractive(this.input.makePixelPerfect())
         
 
-        this.paddle.on("pointerdown",()=>{
+     /*   this.paddle.on("pointerdown",()=>{
             while(this.bricks.children.entries.length>0)
                 this.bricks.children.entries[0].destroy()
                this.nextLevel();
                 
             
-        });
+        });*/
         //space bar pause
        var keyobj=this.input.keyboard.addKey("Space");
        keyobj.on('down',function(event){
